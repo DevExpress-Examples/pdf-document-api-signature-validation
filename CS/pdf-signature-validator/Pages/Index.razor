@@ -1,0 +1,123 @@
+﻿@page "/"
+@using DevExpress.Pdf;
+@using DevExpress.Drawing;
+@using Newtonsoft.Json;
+@using DevExpress.Blazor
+@using System.Security.Cryptography.X509Certificates;
+@inject IJSRuntime JS
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header">
+            PDF Signature Validator
+        </div>
+        <div class="card-body px-0">
+                        <DxFormLayout>
+                <DxFormLayoutItem ColSpanMd="12">
+                    <Template>
+                        <p class="ml-3 mr-3">
+                            This application allows you validate PDF signatures and generate an information report. Click "Browse" to upload a file. 
+                            All detected singatures are shown in the table below.
+                        </p>
+                    </Template>
+                </DxFormLayoutItem>
+                <DxFormLayoutItem>
+                    <Template>
+                        <div class="input-group ml-3 mb-3">
+                            <div class="custom-file">
+                                <InputFile OnChange="@LoadDocument" class="custom-file-input"></InputFile>
+                                <label class="custom-file-label">Load a PDF File</label>
+                            </div>
+                        </div>
+                    </Template>
+                </DxFormLayoutItem>
+            </DxFormLayout>
+            @if (isLoading)
+            {
+                <p class="ml-3 mb-3">Uploading...</p>
+            }
+                        else
+            {
+                @if (signatureList.Count > 0)
+                {
+
+            <div class="col">
+                <DxDataGrid Data="@signatureList"
+                            SelectionMode="DataGridSelectionMode.None"
+                            CssClass="mt-3"
+                            ShowPager="false">
+                    <DxDataGridColumn Field="@nameof(SignatureInfo.Name)"
+                                      Caption="Field Name" />
+                            <DxDataGridColumn Field="@nameof(SignatureInfo.Certificate.Issuer)"
+                                      Caption="Issuer Name" />
+                            <DxDataGridColumn Field="@nameof(SignatureInfo.SignerName)"
+                                              Caption="Signer Name" />
+                            <DxDataGridColumn Field="@nameof(SignatureInfo.Verified)"
+                                              Caption="Is Valid" />
+                            <DxDataGridColumn Field="@nameof(SignatureInfo.Verified)"
+                                              Caption="Is Certificate Valid" />
+
+                 </DxDataGrid>
+            </div>
+            }
+                else
+                {
+                    <p class="ml-3 mb-3">The loaded file does not contain any signatures</p>
+            }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+
+    bool isLoading;
+
+
+    List<SignatureInfo> signatureList = new List<SignatureInfo>();
+    PdfDocumentSigner documentSigner;
+
+    async Task LoadDocument(InputFileChangeEventArgs e)
+    {
+        isLoading = true;
+        await using MemoryStream fs = new();
+        await e.File.OpenReadStream().CopyToAsync(fs);
+        documentSigner = new(fs);
+        isLoading = false;
+
+        var signatureInfo = documentSigner.GetSignatureInfo();
+        if (signatureInfo != null)
+        {
+            foreach (var signature in signatureInfo)
+            {
+                GenerateInfoList(signature);
+            }
+        }
+    }
+
+    void GenerateInfoList(PdfSignatureInfo pdfSignature)
+    {
+        var signerName = pdfSignature.SignerName;
+        var signature = documentSigner.GetPdfPkcs7Signature(pdfSignature.FieldName);
+        var certificate = signature.GetSignatureCertificate();
+        signatureList.Add(new SignatureInfo(pdfSignature.FieldName, signerName, certificate, signature.VerifySignature()));
+    }
+
+    public class SignatureInfo
+    {
+        public string Name { get; private set; }
+        public X509Certificate2 Certificate { get; set; }
+        public string SignerName;
+        public bool Verified;
+
+        public SignatureInfo(string name, string signerName, X509Certificate2 certificate, bool isValid)
+        {
+            Name = name;
+            Certificate = certificate;
+            SignerName = signerName;
+            Verified = isValid;
+        }
+    }
+
+}
