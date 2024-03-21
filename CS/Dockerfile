@@ -5,9 +5,25 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# Install the latest version of font libraries
+RUN apt update &&\
+         apt install -y libc6 libicu-dev libfontconfig1
+ 
+# (Optional step) Install the ttf-mscorefonts-installer package
+# to use Microsoft TrueType core fonts in the application
+RUN echo "deb http://ftp.debian.org/debian/ bullseye contrib" >> /etc/apt/sources.list
+RUN apt update
+RUN apt install -y ttf-mscorefonts-installer
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+
+# Specify your DevExpress NuGet Feed URL as the package source
+RUN dotnet nuget add source https://nuget.devexpress.com/{your-authorization-key}/api
+
+# Copy the project file
 COPY ["pdf-signature-validator/pdf-signature-validator.csproj", "pdf-signature-validator/"]
+
 RUN dotnet restore "pdf-signature-validator/pdf-signature-validator.csproj"
 COPY . .
 WORKDIR "/src/pdf-signature-validator"
