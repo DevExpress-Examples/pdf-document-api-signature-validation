@@ -5,15 +5,15 @@
 <!-- default badges end -->
 # PDF Document API – Validate Document Signatures
 
-The following code sample project shows how to use the PDF Document API to generate signature validation reports.
+The following sample project uses the DevExpress PDF Document API to generate signature validation reports.
 
-Click **Browse** to load a PDF file. If the file contains signatures, the table will include all signature information.
+To test, simply click **Browse** to load the desired PDF file. If the file contains signatures, the table will display signature information as pictured below.
 
 ![image](./media/pdf-signature-validator-main.png)
 
 ## Implementation Details
 
-The [GetSignatureInfo](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfDocumentSigner.GetSignatureInfo) method retrieves all signatures contained in the PDF file. Each signature from the obtained list is then passed as the `GenerateInfoList` method parameter. This method retrieves the signature name, signer’s name and certificate information to generate an information list. The [VerifySignature](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfPkcs7Signature.VerifySignature) method verifies the signature validity. The resulting list is then shown in the [DxDataGrid](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxDataGrid-1?) table.
+The [GetSignatureInfo](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfDocumentSigner.GetSignatureInfo) method retrieves all signatures contained in the PDF file. Each signature from this list is then passed as the `GenerateInfoList` method parameter. This method retrieves signature name, signer’s name, and certificate information to generate the information list. The [VerifySignature](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfPkcs7Signature.VerifySignature) method verifies signature validity. The generated list is then displayed in a [DxDataGrid](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxDataGrid-1?) table.
 
 ## Files to Review
 
