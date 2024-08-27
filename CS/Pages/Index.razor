@@ -37,21 +37,20 @@
                 @if(signatureList.Count > 0) {
 
                     <div class="col">
-                        <DxDataGrid Data="@signatureList"
-                                    SelectionMode="DataGridSelectionMode.None"
+                        <DxGrid Data="@signatureList"                                    
                                     CssClass="mt-3"
-                                    ShowPager="false">
-                            <DxDataGridColumn Field="@nameof(SignatureInfo.Name)"
+                                    PagerVisible="false">
+                            <DxGridDataColumn FieldName="@nameof(SignatureInfo.Name)"
                                               Caption="Field Name" />
-                            <DxDataGridColumn Field="@nameof(SignatureInfo.IssuerName)"
+                            <DxGridDataColumn FieldName="@nameof(SignatureInfo.IssuerName)"
                                               Caption="Certificate Issuer Name" />
-                            <DxDataGridColumn Field="@nameof(SignatureInfo.SignerName)"
+                            <DxGridDataColumn FieldName="@nameof(SignatureInfo.SignerName)"
                                               Caption="Signer Name" />
-                            <DxDataGridColumn Field="@nameof(SignatureInfo.Verified)"
+                            <DxGridDataColumn FieldName="@nameof(SignatureInfo.Verified)"
                                               Caption="Is Signature Valid" />
-                            <DxDataGridColumn Field="@nameof(SignatureInfo.CertificateValid)"
+                            <DxGridDataColumn FieldName="@nameof(SignatureInfo.CertificateValid)"
                                               Caption="Is Certificate Valid" />
-                        </DxDataGrid>
+                        </DxGrid>
                     </div>
                 } else if(FileIsLoaded) {
                     <p class="ml-3 mb-3">The loaded file does not contain any signatures</p>
@@ -68,7 +67,7 @@
 
 
     List<SignatureInfo> signatureList = new List<SignatureInfo>();
-    PdfDocumentSigner documentSigner;
+    PdfDocumentSigner? documentSigner;
     bool FileIsLoaded = false;
 
     async Task LoadDocument(InputFileChangeEventArgs e) {
