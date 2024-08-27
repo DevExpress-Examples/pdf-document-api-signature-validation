@@ -14,7 +14,7 @@ To test, simply click **Browse** to load the desired PDF file. If the file conta
 
 ## Implementation Details
 
-The [GetSignatureInfo](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfDocumentSigner.GetSignatureInfo) method retrieves all signatures contained in the PDF file. Each signature from this list is then passed as the `GenerateInfoList` method parameter. This method retrieves signature name, signer’s name, and certificate information to generate the information list. The [VerifySignature](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfPkcs7Signature.VerifySignature) method verifies signature validity. The generated list is then displayed in a [DxDataGrid](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxDataGrid-1?) table.
+The [GetSignatureInfo](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfDocumentSigner.GetSignatureInfo) method retrieves all signatures contained in the PDF file. Each signature from this list is then passed as the `GenerateInfoList` method parameter. This method retrieves signature name, signer’s name, and certificate information to generate the information list. The [VerifySignature](https://docs.devexpress.com/OfficeFileAPI/DevExpress.Pdf.PdfPkcs7Signature.VerifySignature) method verifies signature validity. The generated list is displayed in a [DxGrid](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid) table.
 
 ## Files to Review
 
