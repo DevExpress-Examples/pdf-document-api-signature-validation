@@ -1,18 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>pdf_signature_validator</RootNamespace>
     <UserSecretsId>761e7fa8-4178-426a-8529-c8c12b1a3816</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="DevExpress.Blazor" Version="24.1.5" />
-    <PackageReference Include="DevExpress.Document.Processor" Version="24.1.5" />
+    <PackageReference Include="DevExpress.Blazor" Version="24.2.1-alpha-24207" />
+    <PackageReference Include="DevExpress.Document.Processor" Version="24.2.1-alpha-24207" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
-
 </Project>
