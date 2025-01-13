@@ -7,10 +7,11 @@
     <RootNamespace>pdf_signature_validator</RootNamespace>
     <UserSecretsId>761e7fa8-4178-426a-8529-c8c12b1a3816</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileBuildArguments>--secret id=dxnuget,source=secrets.dev.yaml</DockerfileBuildArguments>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Blazor" Version="24.2.1-alpha-24207" />
-    <PackageReference Include="DevExpress.Document.Processor" Version="24.2.1-alpha-24207" />
+    <PackageReference Include="DevExpress.Blazor" Version="24.2.3" />
+    <PackageReference Include="DevExpress.Document.Processor" Version="24.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
 </Project>
